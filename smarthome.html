@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>智能家居</title>
+	<style>
+	    body{
+	    	background-color: 	#4B0082;
+	    	color: #fff;
+	    }
+		.container{
+			width: 80%;
+			margin: 0 auto;
+		}
+		.top{
+			width: 100%;
+		}
+		.top ul{
+			float: right;
+			margin-right: 100px;
+			height: 30px;
+		}
+		.top ul li{
+			list-style: none;
+			float: left;
+			margin-right: 20px;
+			font-size: 20px;
+			line-height: 30px;
+		}
+		.top ul .selected{
+			color: #FFD700;
+			font-size: 25px;
+		}
+		.main{
+			clear: both;
+		}
+		.main ul{
+			float: left;
+		}
+		.main ul li{
+			list-style: none;
+			margin-bottom: 10px;
+		}
+		.main ul li .m-box{
+			width: 250px;
+			height: 250px;
+			line-height: 250px;
+			text-align: center;
+			font-size: 25px;
+		}
+		.main .m-right{
+			float: right;
+			height: 774px;
+			width: 75%;
+			background-color: #008B8B;
+			margin-top: 14px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="top">
+			<ul>
+				<li class="selected">首页</li>
+				<li>场景</li>
+				<li>设备</li>
+				<li>状态</li>
+			</ul>
+		</div>
+		<div class="main">
+			<ul>
+				<li><div class="m-box" style="background-color: #FF4500">系统关机</div></li>
+				<li><div class="m-box" style="background-color: #7CFC00">个人中心</div></li>
+				<li><div class="m-box" style="background-color: #4682B4">设置</div></li>
+			</ul>
+			<div class="m-right"></div>
+		</div>
+	</div>
+</body>
+</html>

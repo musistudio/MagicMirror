@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>魔镜设置页</title>
+	<script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="http://static.runoob.com/assets/vue/1.0.11/vue.min.js"></script>
+	<script src="js/config.js"></script>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.form-body{
+			width: 80%;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="form-body" id="container">
+
+		<!-- wifi设置 -->
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">WIFI设置</h3>
+		  </div>
+		  <div class="panel-body">
+		    <div class="input-group">
+		      <span class="input-group-addon" id="basic-addon1">名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</span>
+		      <input type="text" class="form-control" placeholder="ssid" aria-describedby="basic-addon1" id="ssid">
+		    </div>
+		    <div class="input-group">
+		      <span class="input-group-addon" id="basic-addon1">加密方式</span>
+		      <select class="form-control" id="wifi" onchange="selectChange()">
+		        <option value="none">Open</option>
+		        <option value="WPA-PSK">WPA/WPA2 PSK</option>
+		      </select>
+		    </div>
+		    <div class="input-group" id="wifipassword" style="display: none">
+		      <span class="input-group-addon" id="basic-addon1">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
+		      <input type="text" class="form-control" placeholder="password" aria-describedby="basic-addon1" id="password">
+		    </div>
+		  </div>
+		</div>
+
+		<!-- 模块设置 -->
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">模块设置</h3>
+		  </div>
+		  <div class="panel-body">
+		    <div class="panel panel-default">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">时间日期模块设置</h3>
+		      </div>
+		      <div class="panel-body">
+		        <div style="border: 1px solid #000;height: 50px;line-height: 50px;padding-left: 20px;padding-right: 20px;">
+		          <span>启用</span>
+		          <img src="{{  time_status }}" height="50px" width="70px" style="float: right;" class="status-img" onclick="imgClick('time_status')" />
+		        </div>
+		      </div>
+		    </div>
+
+		    <div class="panel panel-default">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">天气预报模块设置</h3>
+		      </div>
+		      <div class="panel-body">
+		        <div style="border: 1px solid #000;height: 50px;line-height: 50px;padding-left: 20px;padding-right: 20px;margin-bottom: 20px;">
+		          <span>启用</span>
+		          <img src="{{ weather_status }}" height="50px" width="70px" style="float: right;" class="status-img" onclick="imgClick('weather_status')"/>
+		        </div>
+		        <div class="input-group">
+		          <span class="input-group-addon" id="basic-addon1">地点</span>
+		          <input type="text" class="form-control" placeholder="location" aria-describedby="basic-addon1" v-model="location">
+		        </div>
+		      </div>
+		    </div>
+
+		    <div class="panel panel-default">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">温湿度模块设置</h3>
+		      </div>
+		      <div class="panel-body">
+		        <div style="border: 1px solid #000;height: 50px;line-height: 50px;padding-left: 20px;padding-right: 20px;">
+		          <span>启用</span>
+		          <img src="{{ temp_status }}" height="50px" width="70px" style="float: right;" class="status-img" onclick="imgClick('temp_status')"/>
+		        </div>
+		      </div>
+		    </div>
+
+		    <div class="panel panel-default">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">问候语模块设置</h3>
+		      </div>
+		      <div class="panel-body">
+		        <div style="border: 1px solid #000;height: 50px;line-height: 50px;padding-left: 20px;padding-right: 20px;">
+		          <span>启用</span>
+		          <img src="{{ regard_status }}" height="50px" width="70px" style="float: right;" onclick="imgClick('regard_status')"/>
+		        </div>
+		      </div>
+		    </div>
+
+		    <div class="panel panel-default">
+		      <div class="panel-heading">
+		        <h3 class="panel-title">新闻模块设置</h3>
+		      </div>
+		      <div class="panel-body">
+		        <div style="border: 1px solid #000;height: 50px;line-height: 50px;padding-left: 20px;padding-right: 20px;">
+		          <span>启用</span>
+		          <img src="{{ news_status }}" height="50px" width="70px" style="float: right;" onclick="imgClick('news_status')"/>
+		        </div>
+		      </div>
+		    </div>
+		    <button type="button" class="btn btn-primary" onclick="submitForm()">保存设置</button>
+	</div>
+
+<script>
+	var imgUrl = new Vue({
+		el: '#container',
+		data: {
+			time_status: '',
+			weather_status: '',
+			temp_status: '',
+			regard_status: '',
+			news_status: '',
+			location: ''
+		},
+		created: function(){
+			var that = this;
+			that.location = config.weather.location;
+			if(config.datetime.enable){
+				that.time_status = 'img/on.png';
+		    }else{
+		    	that.time_status = 'img/off.png';
+		    }
+	    	if(config.weather.enable){
+	    		that.weather_status = 'img/on.png';
+	        }else{
+	        	that.weather_status = 'img/off.png';
+	        }
+        	if(config.indoor_temp.enable){
+        		that.temp_status = 'img/on.png';
+            }else{
+            	that.temp_status = 'img/off.png';
+            }
+        	if(config.regard.enable){
+        		that.regard_status = 'img/on.png';
+            }else{
+            	that.regard_status = 'img/off.png';
+            }
+        	if(config.news.enable){
+        		that.news_status = 'img/on.png';
+            }else{
+            	that.news_status = 'img/off.png';
+            }
+        }
+	});
+</script>
+<script>
+	function imgClick(status){
+		if(imgUrl[status].indexOf("on") != -1){
+			imgUrl[status] = 'img/off.png';
+		}else{
+			imgUrl[status] = 'img/on.png';
+		}
+	}
+	function selectChange(){
+		var oWifi = document.getElementById("wifi");
+		if(oWifi.selectedIndex == 1){
+			document.getElementById("wifipassword").style.display = '';
+		}else{
+			document.getElementById("wifipassword").style.display = 'none';
+		}
+	}
+	var oStatus = document.getElementsByClassName("status-img");
+	for (var i = 0;i < oStatus.length; i++) {
+		(function(i){
+			oStatus[i].addEventListener("click", function(){
+				img_src = oStatus[i].src;
+				if(img_src.indexOf("on") != -1){
+
+				}
+			})
+		})(i);
+	}
+</script>
+<script>
+	function submitForm(){
+		var ssid = document.getElementById("ssid").value;
+		var encry = document.getElementById("wifi").options[document.getElementById("wifi").selectedIndex].value;
+		var password = document.getElementById("password").value;
+		var time_status = imgUrl.time_status;
+		var weather_status = imgUrl.weather_status;
+		var regard_status = imgUrl.regard_status;
+		var news_status = imgUrl.news_status;
+		var temp_status = imgUrl.temp_status;
+		var city = imgUrl.location;
+		console.log(ssid);
+		console.log(encry);
+		console.log(password);
+		console.log(time_status);
+		console.log(weather_status);
+		console.log(regard_status);
+		console.log(news_status);
+		console.log(temp_status);
+		console.log(city);
+		axios({
+			method: 'post',
+			url: 'libs/setting.php',
+			data: {
+				ssid: ssid,
+				encry: encry,
+				password: password,
+				time_status: time_status,
+				weather_status: weather_status,
+				regard_status: regard_status,
+				news_status: news_status,
+				temp_status: temp_status,
+				city: city
+			}
+		}).then(function(resp) {
+			// clock.lunar = resp.data;
+		}).catch(resp => {
+			console.log('请求失败：' + resp.status + ',' + resp.statusText);
+		});
+	}
+</script>
+</body>
+</html>

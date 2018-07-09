@@ -1,0 +1,30 @@
+<?php
+header("Content-type: text/html; charset=utf-8");
+// php生成二维码
+function scerweima2($url=''){
+  require_once 'phpqrcode.php';
+  $value = $url;         //二维码内容
+  $errorCorrectionLevel = 'L';  //容错级别
+  $matrixPointSize = 5;      //生成图片大小
+  //生成二维码图片
+  $QR = QRcode::png($value,false,$errorCorrectionLevel, $matrixPointSize, 2);
+}
+
+$set_charset = 'export LANG=en_US.UTF-8;';
+exec($set_charset."ifconfig", $out, $stats);
+
+for ($i=0; $i <sizeof($out) ; $i++) {
+	$arr = explode(" ", $out[$i]);
+	for ($j=0; $j <sizeof($arr) ; $j++) {
+		if(strstr($arr[$j], 'addr:')){
+			$addr = substr($arr[$j], 5);
+			if($addr != '' && $addr != '127.0.0.1'){
+				$local_ip = $addr;
+			}
+		}
+	}
+}
+
+scerweima2("http://".$local_ip."/MagicMirror/setting.html");
+?>
+
